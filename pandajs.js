@@ -15915,7 +15915,7 @@ core.Class = function() {
   game.addAudio("audio/hurry-up.m4a");
   game.addAudio("audio/level-unlocked-panel.m4a");
   game.addAudio("audio/line-draw-blip.m4a");
-  game.addAudio("audio/Glorious-Morning-2-.m4a");
+  game.addAudio("audio/Glorious-Morning-2-(online-audio-converter.com)(1).m4a");
   game.addAudio("audio/time-over-panel.m4a");
 }), game.module("game.levels").body(function() {
   /** @type {Array} */
@@ -16054,7 +16054,7 @@ core.Class = function() {
      * @return {undefined}
      */
     init : function() {
-      game.audio.playMusic("audio/Glorious-Morning-2-.m4a");
+      game.audio.playMusic("audio/Glorious-Morning-2-(online-audio-converter.com)(1).m4a");
       /** @type {number} */
       var j = 0;
       for (;j < game.Levels.length;j++) {
