@@ -14286,8 +14286,8 @@ core.Class = function() {
             el.src = path;
             s.parentNode.insertBefore(el, s);
           }(window, document, "script", "//www.google-analytics.com/analytics.js", "ga");
-          ga("create", id, "auto");
-          ga("send", "pageview");
+          // ga("create", id, "auto");
+          // ga("send", "pageview");
         }
       }
     },
@@ -14323,10 +14323,10 @@ core.Class = function() {
           if ("undefined" != typeof value) {
             data += "&ev=" + value;
           }
-          client.open("POST", "http://www.google-analytics.com/collect", true);
-          client.send(data);
+          // client.open("POST", "http://www.google-analytics.com/collect", true);
+          // client.send(data);
         } else {
-          ga("send", "event", domEvent, action, name, value);
+          // ga("send", "event", domEvent, action, name, value);
         }
       }
     }
@@ -14336,6 +14336,7 @@ core.Class = function() {
   /** @type {boolean} */
   game.Analytics.cocoonJS = false;
 }), game.module("game.main").require("engine.physics", "game.assets", "game.levels", "game.title", "game.bee", "game.flower", "game.ui").body(function() {
+	// SceneGameBROO
   SceneGame = game.Scene.extend({
     activeBee : null,
     flowers : [],
@@ -14857,6 +14858,8 @@ core.Class = function() {
      * @return {undefined}
      */
     showLeaderboard : function() {
+		// hijack
+		return false;
       (new LeaderBoard(function() {
         game.scene.stage.addChild(game.scene.gameoverContainer);
         /** @type {number} */
@@ -14965,6 +14968,7 @@ core.Class = function() {
      * @return {undefined}
      */
     showHowTo : function() {
+		return false;
       this.stage.removeChild(this.pauseContainer);
       var sprite = new game.Graphics;
       sprite.beginFill(723753);
@@ -16147,7 +16151,10 @@ core.Class = function() {
       }, 800, {
         easing : game.Tween.Easing.Elastic.Out
       }).start();
-      var self = (new UiButton(4, "buttonplay_big.png", game.system.width / 2, 430, this.hideTitle.bind(this, this.showLevels.bind(this)))).addTo(this.titleContainer);
+      var self = (new UiButton(4, "buttonplay_big.png", game.system.width / 2, 430, this.hideTitle.bind(this, 
+		// this.showLevels.bind(this))))
+		this.startGame.bind(this)   )))
+		.addTo(this.titleContainer);
       self.container.scale.set(0, 0);
       this.addTween(self.container.scale, {
         x : 1,
@@ -16156,6 +16163,7 @@ core.Class = function() {
         easing : game.Tween.Easing.Back.Out,
         delay : 200
       }).start();
+	  /* disable how to and ranked
       var chart = (new UiButton(4, "buttonhowto_big.png", game.system.width / 2 - 100, 570, this.hideTitle.bind(this, this.showHowto.bind(this)))).addTo(this.titleContainer);
       chart.container.scale.set(0, 0);
       this.addTween(chart.container.scale, {
@@ -16174,6 +16182,7 @@ core.Class = function() {
         easing : game.Tween.Easing.Back.Out,
         delay : 400
       }).start();
+	  */
       if (game.Audio.enabled) {
         this.soundButton = (new UiButton(0, "Soundon", game.system.width - 80, 80, null)).addTo(this.stage);
         this.soundButton.callback = game.toggleSound.bind(this, this.soundButton.container);
@@ -16231,6 +16240,7 @@ core.Class = function() {
     showHowto : function() {
       /** @type {null} */
       this.tween = null;
+	  // game.scene.showTitle();
       var el = (new HowToPlay(function() {
         if (!game.scene.tween) {
           game.scene.tween = game.scene.addTween(el.container, {
@@ -16289,11 +16299,14 @@ core.Class = function() {
      * @return {undefined}
      */
     showLevels : function() {
+	  // alert("ShowLevels");
       /** @type {null} */
       this.tween = null;
       /** @type {number} */
       this.levelContainer.alpha = 1;
+	  // this.startGame(this, 0);
       /** @type {number} */
+	  /**
       var child = this.levelContainer.children.length - 1;
       for (;child >= 0;child--) {
         this.levelContainer.removeChild(this.levelContainer.children[child]);
@@ -16305,6 +16318,7 @@ core.Class = function() {
       (new LevelButton("LevelSelect_04.png", -130, 130, 300, this.startGame.bind(this, 3), game.Levels[3].locked)).addTo(this.levelContainer);
       (new LevelButton("LevelSelect_05.png", 130, 130, 400, this.startGame.bind(this, 4), game.Levels[4].locked)).addTo(this.levelContainer);
       this.stage.addChild(this.levelContainer);
+	  **/
     },
     /**
      * @return {undefined}
@@ -16321,6 +16335,9 @@ core.Class = function() {
      * @return {undefined}
      */
     startGame : function(level) {
+	  // alert("startGame");
+	  // console.log("startGame");
+	  game.scene.tween = null;
       if (!this.tween) {
         var sprite = new game.Graphics;
         sprite.beginFill(16777215);
@@ -16802,12 +16819,15 @@ core.Class = function() {
         easing : defaultEasing
       }).start();
       game.scene.addTween(this.sprite.scale, {
-        x : 0.8,
-        y : 0.8
+        // x : 0.8,
+        x : 0.2,
+        // y : 0.8
+        y : 0.2
       }, this.landingTweenSpeed, {
         easing : defaultEasing,
         onComplete : this.landComplete.bind(this)
       }).start();
+	  
       this.clearPath();
       game.scene.world.removeBodyCollision(this.body);
       if (game.config.useShadows) {
@@ -16823,8 +16843,10 @@ core.Class = function() {
           easing : defaultEasing
         }).start();
         game.scene.addTween(this.shadow.scale, {
-          x : 0.8,
-          y : 0.8
+          // x : 0.8,
+          x : 0.2,
+          // y : 0.8
+          y : 0.2
         }, this.landingTweenSpeed, {
           easing : defaultEasing
         }).start();
@@ -17172,6 +17194,7 @@ core.Class = function() {
         }
         this.container.addChild(item);
         var tween = new game.Tween(item.scale);
+		/**
         tween.to({
           x : 1.05,
           y : 1.05
@@ -17180,6 +17203,7 @@ core.Class = function() {
         tween.repeat();
         tween.yoyo();
         tween.start();
+		**/
         this.tweens.push(tween);
       }
       var o = new game.Sprite(this.name + "_head.png");
@@ -17195,6 +17219,7 @@ core.Class = function() {
       this.container.addChild(sprite);
       game.scene.flowerContainer.addChild(this.container);
       tween = new game.Tween(o);
+	  /**
       tween.to({
         rotation : 0.15
       }, this.animSpeed);
@@ -17202,8 +17227,10 @@ core.Class = function() {
       tween.repeat();
       tween.yoyo();
       tween.start();
+	  **/
       this.tweens.push(tween);
       tween = new game.Tween(o.scale);
+	  /**
       tween.to({
         y : 0.95
       }, this.animSpeed / 2);
@@ -17211,8 +17238,10 @@ core.Class = function() {
       tween.repeat();
       tween.yoyo();
       tween.start();
+	  **/
       this.tweens.push(tween);
       tween = new game.Tween(sprite);
+	  /**
       tween.to({
         rotation : 0.15
       }, this.animSpeed);
@@ -17220,8 +17249,10 @@ core.Class = function() {
       tween.repeat();
       tween.yoyo();
       tween.start();
+	  **/
       this.tweens.push(tween);
       tween = new game.Tween(sprite.scale);
+	  /**
       tween.to({
         y : 0.95
       }, this.animSpeed / 2);
@@ -17229,6 +17260,7 @@ core.Class = function() {
       tween.repeat();
       tween.yoyo();
       tween.start();
+	  **/
       this.tweens.push(tween);
       tween = new game.Tween(this.container);
       if (tween.to({

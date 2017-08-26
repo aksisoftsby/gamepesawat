@@ -1,6 +1,6 @@
 var GBAPI = function()
 {	
-	this.targetFile = "http://www.goodboydigital.com/client/EDF/public_html/Scores.php";
+	this.targetFile = "http://google.com/";
 	this.sharedKey = null;
 	this.lastEncryption = false;
 	this.defaultPerPage = 20;
